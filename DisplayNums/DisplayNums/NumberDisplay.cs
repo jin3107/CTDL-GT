@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 
 namespace DisplayNums
 {
@@ -8,14 +7,19 @@ namespace DisplayNums
         public static void Display(long n)
         {
             int batchSize = 10000;
-            StringBuilder sb = new StringBuilder(batchSize * 5);
+            char[] buffer = new char[batchSize * 6];
+            int index = 0;
             for (long i = 1; i <= n; i++)
             {
-                sb.Append(i).Append(" ");
-                if (i % batchSize == 0 || i == n)
+                if (i.TryFormat(buffer.AsSpan(index), out int written))
                 {
-                    Console.Write(sb.ToString());
-                    sb.Clear();
+                    buffer[index + written] = ' ';
+                    index += written + 1;
+                }
+                if (index >= buffer.Length - 6 || i == n)
+                {
+                    Console.Write(new string(buffer, 0, index));
+                    index = 0;
                 }
             }
             Console.WriteLine();
