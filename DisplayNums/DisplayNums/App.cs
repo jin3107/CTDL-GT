@@ -9,9 +9,6 @@ namespace DisplayNums
         {
             Console.InputEncoding = System.Text.Encoding.UTF8;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.Clear();
 
             Console.WriteLine("-- Chương trình đo thời gian & bộ nhớ khi hiển thị n số nguyên --");
             Console.Write("\nNhập n: ");
@@ -39,7 +36,6 @@ namespace DisplayNums
             Console.WriteLine($"📌 Chênh lệch: {(memoryAfter - memoryBefore) / 1024.0:F2} KB");
 
             Console.ReadKey();
-            Console.ResetColor();
         }
     }
 }
