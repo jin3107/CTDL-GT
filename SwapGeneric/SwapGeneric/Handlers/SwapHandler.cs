@@ -34,16 +34,19 @@ namespace SwapGeneric
 
         public static void SwapNhanVien()
         {
-            NhanVien nv1 = new NhanVien(
+            NhanVien nv1 = new NhanVien
+            (
                 InputHandler.ReadString("Nhập tên nhân viên 1: "),
                 InputHandler.ReadInt("Nhập mã nhân viên 1: "),
-                InputHandler.ReadDouble("Nhập hệ số lương nhân viên 1: "));
+                InputHandler.ReadDouble("Nhập hệ số lương nhân viên 1: ")
+            );
 
-            NhanVien nv2 = new NhanVien(
+            NhanVien nv2 = new NhanVien
+            (
                 InputHandler.ReadString("Nhập tên nhân viên 2: "),
                 InputHandler.ReadInt("Nhập mã nhân viên 2: "),
-                InputHandler.ReadDouble("Nhập hệ số lương nhân viên 2: "));
-
+                InputHandler.ReadDouble("Nhập hệ số lương nhân viên 2: ")
+            );
             Utils.Swap(ref nv1, ref nv2);
             Console.WriteLine($"Swapped NhanVien:\n  NV1: {nv1}\n  NV2: {nv2}");
         }
