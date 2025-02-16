@@ -10,37 +10,44 @@ namespace StudentManagementGeneric
 {
     public class TinhDiem
     {
-        public static double TinhDTBCach1(SinhVien[] ds)
+        public static double TinhDTBCach1<T>(T ds) where T : IEnumerable<SinhVien>
         {
-            double tong = 0;
-            foreach (var sv in ds)
-                tong += sv.DTB;
-            return tong / ds.Length;
+            return ds.Average(sv => sv.DTB);
         }
 
-        public static double TinhDTBCach2(SinhVien[] ds)
+        public static double TinhDTBCach2<T>(T ds) where T : IEnumerable<SinhVien>
         {
-            double tongM1 = 0, tongM2 = 0, tongM3 = 0;
-            foreach (var sv in ds)
-            {
-                tongM1 += sv.M1;
-                tongM2 += sv.M2;
-                tongM3 += sv.M3;
-            }
-            return (tongM1 + tongM2 + tongM3) / (3.0 * ds.Length);
+            var avgScores = ds.Aggregate(
+                new { M1 = 0.0, M2 = 0.0, M3 = 0.0, Count = 0 },
+                (acc, sv) => new
+                {
+                    M1 = acc.M1 + sv.M1,
+                    M2 = acc.M2 + sv.M2,
+                    M3 = acc.M3 + sv.M3,
+                    Count = acc.Count + 1
+                });
+
+            return (avgScores.M1 + avgScores.M2 + avgScores.M3) / (3.0 * avgScores.Count);
         }
 
-        public static long DoThoiGian(Func<SinhVien[], double> func, SinhVien[] ds)
+        public static (long ThoiGian, double KetQua) DoThoiGian<T>(Func<T, double> func, T ds) where T : IEnumerable<SinhVien>
         {
-            Stopwatch sw = Stopwatch.StartNew();
-            func(ds);
+            var sw = Stopwatch.StartNew();
+            var ketQua = func(ds);
             sw.Stop();
-            return sw.ElapsedMilliseconds;
+            return (sw.ElapsedMilliseconds, ketQua);
         }
 
         public static void LuuKetQua(string filePath, string noiDung)
         {
-            File.AppendAllText(filePath, noiDung + Environment.NewLine);
+            try
+            {
+                File.AppendAllText(filePath, $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}: {noiDung}{Environment.NewLine}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi khi lưu kết quả: {ex.Message}");
+            }
         }
     }
 }
