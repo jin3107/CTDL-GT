@@ -17,16 +17,16 @@ jobs:
 
       - name: Restore dependencies
         run: |
-          dotnet restore correct/path/to/DisplayNums.csproj
-          dotnet restore StudentManagement/StudentManagement.csproj
-          dotnet restore StudentManagementGeneric/StudentManagementGeneric.csproj
-          dotnet restore SwapGeneric/SwapGeneric.csproj
-          dotnet restore TestLib/TestLib.csproj
+          dotnet restore DisplayNums/DisplayNums/DisplayNums.csproj
+          dotnet restore StudentManagement/StudentManagement/StudentManagement.csproj
+          dotnet restore StudentManagementGeneric/StudentManagementGeneric/StudentManagementGeneric.csproj
+          dotnet restore SwapGeneric/SwapGeneric/SwapGeneric.csproj
+          dotnet restore TestLib/TestLib/TestLib.csproj
 
       - name: Build projects
         run: |
-          dotnet build correct/path/to/DisplayNums.csproj --no-restore
-          dotnet build StudentManagement/StudentManagement.csproj --no-restore
-          dotnet build StudentManagementGeneric/StudentManagementGeneric.csproj --no-restore
-          dotnet build SwapGeneric/SwapGeneric.csproj --no-restore
-          dotnet build TestLib/TestLib.csproj --no-restore
+          dotnet build DisplayNums/DisplayNums/DisplayNums.csproj --no-restore
+          dotnet build StudentManagement/StudentManagement/StudentManagement.csproj --no-restore
+          dotnet build StudentManagementGeneric/StudentManagementGeneric/StudentManagementGeneric.csproj --no-restore
+          dotnet build SwapGeneric/SwapGeneric/SwapGeneric.csproj --no-restore
+          dotnet build TestLib/TestLib/TestLib.csproj --no-restore
