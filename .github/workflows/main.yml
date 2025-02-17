@@ -1,0 +1,32 @@
+name: .NET Build & Test
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0'
+
+      - name: Restore dependencies
+        run: |
+          dotnet restore correct/path/to/DisplayNums.csproj
+          dotnet restore StudentManagement/StudentManagement.csproj
+          dotnet restore StudentManagementGeneric/StudentManagementGeneric.csproj
+          dotnet restore SwapGeneric/SwapGeneric.csproj
+          dotnet restore TestLib/TestLib.csproj
+
+      - name: Build projects
+        run: |
+          dotnet build correct/path/to/DisplayNums.csproj --no-restore
+          dotnet build StudentManagement/StudentManagement.csproj --no-restore
+          dotnet build StudentManagementGeneric/StudentManagementGeneric.csproj --no-restore
+          dotnet build SwapGeneric/SwapGeneric.csproj --no-restore
+          dotnet build TestLib/TestLib.csproj --no-restore
