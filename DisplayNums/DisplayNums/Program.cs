@@ -1,14 +1,3 @@
-﻿using System;
-using System.Diagnostics;
-using System.Text;
+﻿using DisplayNums;
 
-namespace DisplayNums
-{
-    class Program
-    {
-        static void Main()
-        {
-            App.Run();
-        }
-    }
-}
+App.Run();
