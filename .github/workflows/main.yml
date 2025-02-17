@@ -1,4 +1,4 @@
-name: .NET Build & Test
+name: .NET Build & Test All
 
 on: [push, pull_request]
 
@@ -8,21 +8,28 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.x.x'
-
-    - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y dotnet-sdk-8.0
+        dotnet-version: '8.0'
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: |
+        dotnet restore DisplayNums/DisplayNums
+        dotnet restore StudentManagement/StudentManagement
+        dotnet restore StudentManagementGeneric/StudentManagementGeneric
+        dotnet restore SwapGeneric/SwapGeneric
+        dotnet restore TestLib/TestLib
 
     - name: Build
-      run: dotnet build --no-restore
+      run: |
+        dotnet build DisplayNums/DisplayNums --no-restore
+        dotnet build StudentManagement/StudentManagement --no-restore
+        dotnet build StudentManagementGeneric/StudentManagementGeneric --no-restore
+        dotnet build SwapGeneric/SwapGeneric --no-restore
+        dotnet build TestLib/TestLib --no-restore
 
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    - name: Run tests
+      run: dotnet test TestLib/TestLib --no-build --verbosity normal
