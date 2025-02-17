@@ -7,37 +7,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v2
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.x.x'
 
-    - name: Install .NET Framework 4.8 Developer Pack
-      run: sudo apt-get install -y dotnet-sdk-4.8
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y dotnet-sdk-8.0
 
     - name: Restore dependencies
-      run: |
-        dotnet restore DisplayNums/DisplayNums/DisplayNums.csproj
-        dotnet restore StudentManagement/StudentManagement/StudentManagement.csproj
-        dotnet restore StudentManagementGeneric/StudentManagementGeneric/StudentManagementGeneric.csproj
-        dotnet restore SwapGeneric/SwapGeneric/SwapGeneric.csproj
-        dotnet restore TestLib/TestLib/TestLib.csproj
+      run: dotnet restore
 
-    - name: Build projects
-      run: |
-        dotnet build DisplayNums/DisplayNums/DisplayNums.csproj --no-restore
-        dotnet build StudentManagement/StudentManagement/StudentManagement.csproj --no-restore
-        dotnet build StudentManagementGeneric/StudentManagementGeneric/StudentManagementGeneric.csproj --no-restore
-        dotnet build SwapGeneric/SwapGeneric/SwapGeneric.csproj --no-restore
-        dotnet build TestLib/TestLib/TestLib.csproj --no-restore
+    - name: Build
+      run: dotnet build --no-restore
 
-    - name: Test projects
-      run: |
-        dotnet test DisplayNums/DisplayNums/DisplayNums.csproj --no-build --verbosity normal
-        dotnet test StudentManagement/StudentManagement/StudentManagement.csproj --no-build --verbosity normal
-        dotnet test StudentManagementGeneric/StudentManagementGeneric/StudentManagementGeneric.csproj --no-build --verbosity normal
-        dotnet test SwapGeneric/SwapGeneric/SwapGeneric.csproj --no-build --verbosity normal
-        dotnet test TestLib/TestLib/TestLib.csproj --no-build --verbosity normal
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
